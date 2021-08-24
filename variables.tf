@@ -16,6 +16,14 @@ variable "zone" {
   type = string
 }
 
+variable "alt_region" {
+  type = string
+}
+
+variable "alt_zone" {
+  type = string
+}
+
 variable "location" {
   default = "US"
 }
