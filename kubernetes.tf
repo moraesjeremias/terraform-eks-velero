@@ -1,49 +1,37 @@
-data "digitalocean_kubernetes_versions" "do_kubernetes_version" {
-  version_prefix = "1.21."
+# GKE cluster
+resource "google_container_cluster" "velero_backup" {
+  name                     = "velero-backup-${var.gcp_project}-gke"
+  location                 = var.region
+  remove_default_node_pool = true
+  initial_node_count       = 1
+
+  network    = google_compute_network.vpc.name
+  subnetwork = google_compute_subnetwork.subnet.name
 }
 
-resource "digitalocean_kubernetes_cluster" "velero_backup_cluster" {
-  name         = "velero-backup-cluster"
-  region       = "nyc1"
-  auto_upgrade = true
-  version      = data.digitalocean_kubernetes_versions.do_kubernetes_version.latest_version
+# Separately Managed Node Pool
+resource "google_container_node_pool" "velero_backup_nodes" {
+  name       = "${google_container_cluster.velero_backup.name}-node-pool"
+  location   = var.region
+  cluster    = google_container_cluster.velero_backup.name
+  node_count = var.gke_num_nodes
 
-  maintenance_policy {
-    start_time = "04:00"
-    day        = "sunday"
+  node_config {
+    oauth_scopes = [
+      "https://www.googleapis.com/auth/logging.write",
+      "https://www.googleapis.com/auth/monitoring",
+    ]
+
+    labels = {
+      env = var.gcp_project
+    }
+
+    # preemptible  = true
+    machine_type = "n1-standard-1"
+    tags         = ["gke-node", "${var.gcp_project}-gke"]
+    metadata = {
+      disable-legacy-endpoints = "true"
+    }
   }
-
-  node_pool {
-    name       = "default"
-    size       = "s-1vcpu-2gb"
-    auto_scale = true
-    min_nodes  = 3
-    max_nodes  = 5
-  }
-
-  tags = ["velero-backup-cluster"]
-
 }
 
-resource "digitalocean_kubernetes_cluster" "velero_recovery_cluster" {
-  name         = "velero-recovery-cluster"
-  region       = "nyc1"
-  auto_upgrade = true
-  version      = data.digitalocean_kubernetes_versions.do_kubernetes_version.latest_version
-
-  maintenance_policy {
-    start_time = "04:00"
-    day        = "sunday"
-  }
-
-  node_pool {
-    name       = "default"
-    size       = "s-1vcpu-2gb"
-    auto_scale = true
-    min_nodes  = 3
-    max_nodes  = 5
-  }
-
-  tags = ["velero_recovery_cluster"]
-
-}

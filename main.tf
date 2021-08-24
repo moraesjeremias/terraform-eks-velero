@@ -1,12 +1,16 @@
 terraform {
+  required_version = ">= 1.0.0"
   required_providers {
-    digitalocean = {
-      source  = "digitalocean/digitalocean"
-      version = "2.11.1"
+    google = {
+      source  = "hashicorp/google"
+      version = "3.81.0"
     }
   }
 }
 
-provider "digitalocean" {
-  token = var.do_token
+provider "google" {
+  project     = var.gcp_project
+  region      = var.region
+  zone        = var.zone
+  credentials = var.gcp_credentials
 }
