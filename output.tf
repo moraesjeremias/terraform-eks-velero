@@ -8,3 +8,8 @@ output "kubernetes_cluster_host" {
   value       = google_container_cluster.velero_backup.endpoint
   description = "GKE Cluster Host"
 }
+
+output "region" {
+  value       = var.region
+  description = "GCP Region"
+}

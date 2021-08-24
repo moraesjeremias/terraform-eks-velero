@@ -1,6 +1,6 @@
 # GKE cluster
 resource "google_container_cluster" "velero_backup" {
-  name                     = "velero-backup-${var.gcp_project}-gke"
+  name                     = "velero-backup"
   location                 = var.region
   remove_default_node_pool = true
   initial_node_count       = 1
@@ -28,7 +28,7 @@ resource "google_container_node_pool" "velero_backup_nodes" {
 
     # preemptible  = true
     machine_type = "n1-standard-1"
-    tags         = ["gke-node", "${var.gcp_project}-gke"]
+    tags         = ["gke-node", "${var.gcp_project}-gke", google_container_cluster.velero_backup.name]
     metadata = {
       disable-legacy-endpoints = "true"
     }
