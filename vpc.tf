@@ -21,7 +21,7 @@ resource "google_compute_network" "recovery_vpc" {
 # Subnet
 resource "google_compute_subnetwork" "recovery_subnet" {
   name          = "recovery-gke-subnet"
-  region        = var.alt_region
+  region        = var.region
   network       = google_compute_network.recovery_vpc.name
   ip_cidr_range = "10.8.0.0/24"
 }
