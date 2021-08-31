@@ -29,3 +29,13 @@ output "alt_region" {
   value       = var.alt_region
   description = "GCP Region"
 }
+
+output "zone" {
+  value       = var.zone
+  description = "GCP zone"
+}
+
+output "alt_zone" {
+  value       = var.alt_zone
+  description = "GCP zone"
+}
