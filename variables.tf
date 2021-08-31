@@ -8,6 +8,11 @@ variable "gcp_project" {
   sensitive = true
 }
 
+variable "service_account_email" {
+  type      = string
+  sensitive = true
+}
+
 variable "region" {
   type = string
 }
