@@ -31,7 +31,7 @@ resource "google_container_node_pool" "velero_backup_nodes" {
   node_count = var.gke_num_nodes
 
   node_config {
-    preemptible = true
+    preemptible     = true
     service_account = var.service_account_email
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
@@ -85,7 +85,7 @@ resource "google_container_node_pool" "velero_recovery_nodes" {
   node_count = var.gke_num_nodes
 
   node_config {
-    preemptible = true
+    preemptible     = true
     service_account = var.service_account_email
     oauth_scopes = [
       "https://www.googleapis.com/auth/logging.write",
