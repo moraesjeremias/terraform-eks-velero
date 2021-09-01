@@ -2,3 +2,4 @@ secrets.tfvars
 *.tfstate*
 .terraform
 .terraform.lock*
+*tfplan*
