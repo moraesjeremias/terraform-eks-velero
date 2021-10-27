@@ -2,7 +2,7 @@
 
 ## Motivação e Filosofia
 
-Diante do [Plano de Continuidade de Negócios (PCN) & Disaster Recovery (DR)](https://creditas.atlassian.net/wiki/spaces/SGI/pages/132284908/Plano+de+Continuidade+de+Neg+cios+PCN+Disaster+Recovery+DR) se faz necessário termos mecanismos de backup em diversos níveis.
+Se faz necessário termos mecanismos de backup em diversos níveis para seguir planos de continuidade de negócios e de recuperação de desastres.
 
 Com o Velero é possível criar backups de Clusteres Kubernetes inteiros, inclusive de PVCs e seus dados, além de aplicações (Versões de Releases do Helm inclusive) e [CRDs](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/).
 
